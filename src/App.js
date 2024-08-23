@@ -1,6 +1,22 @@
 import React, { Component } from "react";
 
 class App extends Component {
+  state = {
+    posts: [],
+  };
+
+  handleAdd = () => {
+    console.log("Add");
+  };
+
+  handleUpdate = (post) => {
+    console.log("Update", post);
+  };
+
+  handleDelete = (post) => {
+    console.log("Delete", post);
+  };
+
   render() {
     return (
       <div className="p-5">
