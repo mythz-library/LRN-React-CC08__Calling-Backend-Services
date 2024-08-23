@@ -1,6 +1,22 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+// Handling unexpected errors globally
+axios.interceptors.response.use(null, (error) => {
+  const expectedError =
+    error.response &&
+    error.response.status >= 400 &&
+    error.response.status < 500;
+
+  if (!expectedError) {
+    console.log("Logging the error", error);
+    alert("An unexpected error occurred.");
+  }
+
+  // Return a rejected Promise
+  return Promise.reject(error);
+});
+
 const apiEndpoint = "https://jsonplaceholder.typicode.com/posts";
 
 class App extends Component {
@@ -42,16 +58,12 @@ class App extends Component {
     this.setState({ posts });
 
     try {
+      console.log("done");
       await axios.delete(apiEndpoint + "/" + post.id);
     } catch (error) {
-      // Handing expected errors (if statements)
+      // Handing expected errors
       if (error.response && error.response.status === 404)
         alert("This post has already been deleted.");
-      // Handing unexpected errors (else statements)
-      else {
-        console.log("Loggin the error", error);
-        alert("An unexpected error occurred");
-      }
 
       this.setState({ posts: originalPosts });
     }
