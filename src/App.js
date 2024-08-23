@@ -36,7 +36,6 @@ class App extends Component {
   };
 
   handleDelete = async (post) => {
-    // Store origina state temporarily as backup
     const originalPosts = this.state.posts;
 
     const posts = this.state.posts.filter((p) => p.id !== post.id);
@@ -44,13 +43,16 @@ class App extends Component {
 
     try {
       await axios.delete(apiEndpoint + "/" + post.id);
-
-      // To simulate an error, turn off the network connection or throw an error
-      throw new Error("");
     } catch (error) {
-      alert("Something failed while deleting a post!");
+      // Handing expected errors (if statements)
+      if (error.response && error.response.status === 404)
+        alert("This post has already been deleted.");
+      // Handing unexpected errors (else statements)
+      else {
+        console.log("Loggin the error", error);
+        alert("An unexpected error occurred");
+      }
 
-      // When error occurs, replace posts by its original state
       this.setState({ posts: originalPosts });
     }
   };
