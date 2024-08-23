@@ -16,7 +16,7 @@ class App extends Component {
           </thead>
           <tbody>
             <tr>
-              <th>#</th>
+              <td>#</td>
               <td>#</td>
               <td>#</td>
             </tr>
