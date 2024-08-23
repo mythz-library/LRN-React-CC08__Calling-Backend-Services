@@ -7,12 +7,9 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    // axios.get() returns a promise
-    const promise = axios.get("https://jsonplaceholder.typicode.com/posts");
-
-    // getting actual data object from promise object
-    const response = await promise;
-    console.log(response);
+    // prettier-ignore
+    const {data: posts} = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    this.setState({ posts });
   }
 
   handleAdd = () => {
@@ -41,11 +38,17 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>#</td>
-              <td>#</td>
-              <td>#</td>
-            </tr>
+            {this.state.posts.map((post) => (
+              <tr key={post.id}>
+                <td>{post.title}</td>
+                <td>
+                  <button className="btn btn-info btn-sm">Update</button>
+                </td>
+                <td>
+                  <button className="btn btn-danger btn-sm">Delete</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
