@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+const apiEndpoint = "https://jsonplaceholder.typicode.com/posts";
+
 class App extends Component {
   state = {
     posts: [],
   };
 
   async componentDidMount() {
-    // prettier-ignore
-    const {data: posts} = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    const { data: posts } = await axios.get(apiEndpoint);
     this.setState({ posts });
   }
 
-  handleAdd = () => {
-    console.log("Add");
+  handleAdd = async () => {
+    // Creates temporary data object
+    const obj = { title: "a", body: "b" };
+
+    const { data: post } = await axios.post(apiEndpoint, obj);
+
+    // Bringing the newly created post to the front of the list
+    const posts = [post, ...this.state.posts];
+    this.setState({ posts });
   };
 
   handleUpdate = (post) => {
@@ -27,7 +35,9 @@ class App extends Component {
   render() {
     return (
       <div className="p-5">
-        <button className="btn btn-primary px-4">Add</button>
+        <button onClick={this.handleAdd} className="btn btn-primary px-4">
+          Add
+        </button>
 
         <table className="table mt-5">
           <thead>
