@@ -13,9 +13,6 @@ axios.interceptors.response.use(null, (error) => {
   if (!expectedError) {
     console.log("Logging the error", error);
     toast.error("An unexpected error occurred.");
-
-    // Imported "toast" is a function, In JS functions are objects
-    // so we can use toast messages like, `toast("An unexpected error occurred.");`
   }
 
   // Return a rejected Promise
