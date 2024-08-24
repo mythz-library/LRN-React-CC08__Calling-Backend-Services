@@ -7,7 +7,7 @@ For these implementations, we'll use class components instead modern functional 
 ## 01 - Installing necessary libraries
 
 ```
-npm i bootstrap@4.1.1 axios@0.18
+npm i bootstrap@4.1.1 axios@0.18 react-toastify@4.1
 ```
 
 <br/>
